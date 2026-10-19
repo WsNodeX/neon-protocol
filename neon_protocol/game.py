@@ -638,6 +638,7 @@ class Game:
         # 鼠标 / 键盘输入
         self.mouse_look = not headless
         self._keys_down = set()          # 自建按键集合，替代 pygame.key.get_pressed()
+        self._mouse_moved = False        # 鼠标是否已移动过（用于延迟启用 set_grab）
         if not headless:
             # 标题界面不调用 set_grab / 隐藏鼠标：
             # 过早 set_grab 会让 SDL 在窗口尚未拿到 OS 键盘焦点时（常见于从 IDE 启动）
@@ -691,6 +692,14 @@ class Game:
     def _mouse_look(self) -> None:
         if not self.mouse_look or self.state != ST_PLAY:
             return
+        # 延迟鼠标捕获：等玩家真正移动鼠标（此时窗口必然已获得 OS 焦点）后再
+        # set_grab，规避开局 SDL 在窗口未聚焦时调用 set_grab 导致的键盘冻结
+        # （表现为 WASD 无响应，按 Shift 等键后才恢复）。详见 __init__ 注释。
+        if self._mouse_moved and not pygame.event.get_grab():
+            try:
+                pygame.event.set_grab(True)
+            except Exception:
+                pass
         dx, dy = pygame.mouse.get_rel()
         p = self.world.player
         p.facing = (p.facing + dx * C.MOUSE_SENS_X) % (2 * math.pi)
@@ -857,7 +866,9 @@ class Game:
         self.state = ST_PLAY
         self.show_map = False
         if self.mouse_look:
-            pygame.event.set_grab(True)
+            # 注意：此处不再立即 set_grab，否则窗口尚未获得 OS 键盘焦点时
+            # SDL 会冻结键盘事件（WASD 开局无响应）。鼠标捕获改由 _mouse_look
+            # 在玩家首次移动鼠标后延迟启用，并由 WINDOWEVENT_FOCUS_GAINED 兜底。
             pygame.mouse.set_visible(False)
             pygame.mouse.get_rel()
         self.hud._minimap_cache.clear()
@@ -953,7 +964,7 @@ class Game:
             self._handle_event(ev)
             self._handle_keyup(ev)
             if ev.type == pygame.MOUSEMOTION and self.state == ST_PLAY:
-                pass
+                self._mouse_moved = True
 
         w = self.world
 
