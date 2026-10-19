@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="screenshots/title.png" alt="NEON PROTOCOL" width="820">
+<img src="https://raw.githubusercontent.com/WsNodeX/neon-protocol/master/screenshots/title.png" alt="NEON PROTOCOL" width="820">
 
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org)
 [![Engine](https://img.shields.io/badge/engine-pygame%20%2B%20numpy-9cf.svg)](https://www.pygame.org)
@@ -22,9 +22,9 @@
 
 | 战斗 | 敌潮 |
 |:---:|:---:|
-| ![combat](screenshots/combat.png) | ![combat-2](screenshots/combat-2.png) |
+| ![combat](https://raw.githubusercontent.com/WsNodeX/neon-protocol/master/screenshots/combat.png) | ![combat-2](https://raw.githubusercontent.com/WsNodeX/neon-protocol/master/screenshots/combat-2.png) |
 | **协议补丁（局内成长）** | **全网拓扑（Tab 全屏地图）** |
-| ![upgrade](screenshots/upgrade.png) | ![fullmap](screenshots/fullmap.png) |
+| ![upgrade](https://raw.githubusercontent.com/WsNodeX/neon-protocol/master/screenshots/upgrade.png) | ![fullmap](https://raw.githubusercontent.com/WsNodeX/neon-protocol/master/screenshots/fullmap.png) |
 
 ## 玩法
 
