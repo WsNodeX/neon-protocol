@@ -1,0 +1,18 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ---- 本项目虚拟环境（含 numpy / pygame，114M+，不入库）----
+neon_protocol/venv/
+
+# ---- IDE ----
+.idea/
+.vscode/
+
+# ---- 系统 ----
+.DS_Store
+Thumbs.db
