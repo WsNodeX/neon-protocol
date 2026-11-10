@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # pygame and numpy are the only two runtime dependencies. Everything the
+      # game draws and plays is generated at runtime — no asset files exist in
+      # the repo — so there is nothing else to fetch.
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pygame numpy
+
+      - name: Compile every module
+        run: python -m compileall -q neon_protocol
+
+      - name: Import check
+        run: python -c "import neon_protocol, neon_protocol.renderer, neon_protocol.audio; print('imports ok')"
+
+      # SDL needs a headless driver on CI: there is no display, and pygame will
+      # otherwise fail at init with "No available video device".
+      - name: Headless run (300 frames)
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+        run: python -m neon_protocol.main --headless --frames 300
+
+      - name: Renderer benchmark
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+        run: python -m neon_protocol.main --bench
