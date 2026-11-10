@@ -1,0 +1,36 @@
+name: Feature request
+description: Suggest something the project should do
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This project has a stated constraint — no third-party dependencies. A
+        request that needs one is still worth discussing, but say so up front.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you hitting
+      description: Describe the situation, not the solution. Solutions are easier to judge against a real problem.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you tried instead
+      description: Including "used a different library" — that is a valid answer and interesting to know.
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraints
+      options:
+        - label: This can be done with the standard library only
+        - label: This would need a third-party dependency
+        - label: I am willing to open a pull request

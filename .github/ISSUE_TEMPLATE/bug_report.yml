@@ -1,0 +1,45 @@
+name: Bug report
+description: Something does not work as documented
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A README example that does not run is a bug, and a useful one — please
+        include the exact snippet.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The actual output, including the traceback if there is one.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: Quote the README or docstring line that promised it, if there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: The smallest command or script that shows the problem.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The release tag, or the commit you are on.
+      placeholder: v1.0.0
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime
+      description: Python or JDK version, and OS.
+      placeholder: Python 3.11 on Ubuntu 24.04
