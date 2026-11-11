@@ -32,6 +32,12 @@ pip install pygame numpy
 python -m neon_protocol.main
 ```
 
+## 实机画面
+
+![gameplay](screenshots/gameplay.gif)
+
+<sub>上面这段不是录屏，是 `--headless` 模式逐帧渲染出来的：`python -m neon_protocol.main --headless --shots out/ --shot-frames 60,72,84,...`，再由 `scripts/make_game_gif.py` 合成。</sub>
+
 ## 截图
 
 | 战斗 | 敌潮 |
